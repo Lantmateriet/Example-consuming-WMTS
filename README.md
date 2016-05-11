@@ -6,10 +6,10 @@ To get map data from the wmts you need to get an API key and insert it into the 
 * First you need to create a [user account](https://opendata.lantmateriet.se/#register) (web page in swedish only) to acquire your API-key.
 
 * Then you need to update the apiKey constant in index.html with your API key:
-
-       //TODO Insert your API key here
-       const apiKey = 'My key';
-
+```
+//TODO Insert your API key here
+const apiKey = 'My key';
+```
 * Now you can open index.html in a web browser and hopefully see a map of Sweden
 
 ## License
