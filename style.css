@@ -1,0 +1,69 @@
+html, body {
+font-family: 'Open Sans', sans-serif;
+-webkit-font-smoothing: antialiased;
+font-weight: 300;
+letter-spacing: -0.5px;
+}
+.map {
+position: fixed;
+box-sizing: border-box;
+height: 100%;
+width: 100%;
+}
+.navbar-brand {
+font-weight: 300;
+font-size: 1.7em;
+color: black;
+line-height: 40px;
+letter-spacing: -1.5px;
+color: white !important;
+text-decoration: none !important;
+}
+ul.non-responsive-menu {
+background: #4f5659;
+height: 70px;
+margin: 0;
+padding: 0;
+list-style-type: none;
+}
+ul.non-responsive-menu li {
+margin: 0;
+box-sizing: border-box;
+text-align: center;
+}
+ul.non-responsive-menu li a {
+color: white !important;
+text-decoration: none !important;
+line-height: auto !important;
+}
+ul.non-responsive-menu li a i {
+font-size: 35px;
+margin-top: 10px;
+}
+ul.non-responsive-menu li a .text {
+display: block;
+font-size: 0.9em;
+position: relative;
+top: -5px;
+}
+ul.non-responsive-menu li.pull-right {
+padding-right: 20px;
+}
+.logotype {
+position: fixed;
+bottom: 20px;
+right: 20px;
+z-index: 999;
+}
+.ol-control button {
+background: #4f5659;
+}
+.ol-control, .ol-control:hover {
+background-color: rgba(79, 84, 86, .25);
+}
+.msg {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
