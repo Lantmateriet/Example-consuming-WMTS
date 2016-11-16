@@ -1,5 +1,5 @@
 # Example consuming WMTS
-A short example of how to consume Lantmäteriets (Swedish National Land Survey) open geodata from a web map tile service (WMTS).
+A short example of how to consume Lantmäteriets (Swedish National Land Survey) open geodata from a web map tile service (WMTS), with Open Layers.
 ## Running the Example
 To get map data from the wmts you need to get an API key and insert it into the code:
 
