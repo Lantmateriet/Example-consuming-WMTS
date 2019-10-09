@@ -1,112 +1,114 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-    <link
-      href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600italic,600"
-      rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="http://openlayers.org/en/v3.15.1/css/ol.css" type="text/css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-    <script src="js/proj4.js" type="text/javascript"></script>
-    <script src="http://spatialreference.org/ref/epsg/3006/proj4js/" type="text/javascript"></script>
-    <script src="http://openlayers.org/en/v3.15.1/build/ol.js" type="text/javascript"></script>
-    <script type="text/javascript"
-      src="js/canvas-toBlob.js?minimize=false"></script>
-    <script type="text/javascript"
-      src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2014-11-29/FileSaver.min.js"></script>
-    <title>Open geodata</title>
-  </head>
-  <body>
-    <nav>
-      <ul class="non-responsive-menu">
-        <li class="pull-left"><a class="navbar-brand"
+
+<head>
+  <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+    integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600italic,600"
+    rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="http://openlayers.org/en/v3.20.1/css/ol.css" type="text/css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+    integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+    crossorigin="anonymous"></script>
+  <script src="js/proj4.js" type="text/javascript"></script>
+  <script src="http://spatialreference.org/ref/epsg/3006/proj4js/" type="text/javascript"></script>
+  <script src="http://openlayers.org/en/v3.20.1/build/ol.js" type="text/javascript"></script>
+  <script type="text/javascript" src="js/canvas-toBlob.js?minimize=false"></script>
+  <script type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2014-11-29/FileSaver.min.js"></script>
+  <title>Open geodata</title>
+</head>
+
+<body>
+  <nav>
+    <ul class="non-responsive-menu">
+      <li class="pull-left"><a class="navbar-brand"
           href="http://www.lantmateriet.se/sv/Kartor-och-geografisk-information/Kartor/oppna-data/">Open
           geodata</a>
-        </li>
-        <li class="pull-right"><a href="javascript:void(0);"
-          id="exportImage"><i class="material-icons">file_download</i><span
-          class="text">Download</span></a></li>
-      </ul>
-    </nav>
-    <span class="msg">Please read README.md on how to get the map visible</span>
-    <div id="map" class="map"></div>
+      </li>
+      <li class="pull-right"><a href="javascript:void(0);" id="exportImage"><i
+            class="material-icons">file_download</i><span class="text">Download</span></a></li>
+    </ul>
+  </nav>
+  <span class="msg">Please read README.md on how to get the map visible</span>
+  <div id="map" class="map"></div>
 
-    <script type="text/javascript">
-      const extent = [ -1200000, 4700000, 2600000, 8500000 ];
-      const resolutions = [ 4096.0, 2048.0, 1024.0, 512.0, 256.0, 128.0, 64.0, 32.0, 16.0, 8.0 ];
-      const matrixIds = [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ];
+  <script type="text/javascript">
+    const extent = [-1200000, 4700000, 2600000, 8500000];
+    const resolutions = [4096.0, 2048.0, 1024.0, 512.0, 256.0, 128.0, 64.0, 32.0, 16.0, 8.0];
+    const matrixIds = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-      const tileGrid = new ol.tilegrid.WMTS({
-        tileSize : 256,
-        extent : extent,
-        resolutions : resolutions,
-        matrixIds : matrixIds
-      });
+    const tileGrid = new ol.tilegrid.WMTS({
+      tileSize: 256,
+      extent: extent,
+      resolutions: resolutions,
+      matrixIds: matrixIds
+    });
 
-      //TODO Insert your API key here
-      const apiKey = 'My key';
-      
-      const	wmts = new ol.layer.Tile({
-        extent : extent,
-        source : new ol.source.WMTS({
-          url : 'https://api.lantmateriet.se/open/topowebb-ccby/v1/wmts/token/' + apiKey + '/',
-          layer : 'topowebb',
-          format : 'image/png',
-          matrixSet : '3006',
-          tileGrid : tileGrid,
-          version : '1.0.0',
-          style : 'default',
-          crossOrigin: 'anonymous'
-      	})
-      });
+    //TODO Insert your API key here
+    const apiKey = 'My key';
 
-      const	interactions = ol.interaction.defaults({
-        altShiftDragRotate : false,
-        pinchRotate : false
-      });
-      this.map = new ol.Map({
-        target : 'map',
-        layers : [ wmts ],
-        logo : false,
-        interactions : interactions,
-        view : new ol.View({
-          extent : extent,
-          center : [ 616542, 6727536 ],
-          zoom : 1,
-          resolutions : resolutions
-        })
-      });
-      zoomslider = new ol.control.ZoomSlider();
-      this.map.addControl(zoomslider);
+    const wmts = new ol.layer.Tile({
+      extent: extent,
+      source: new ol.source.WMTS({
+        url: 'https://api.lantmateriet.se/open/topowebb-ccby/v1/wmts/token/' + apiKey + '/',
+        layer: 'topowebb',
+        format: 'image/png',
+        matrixSet: '3006',
+        tileGrid: tileGrid,
+        version: '1.0.0',
+        style: 'default',
+        crossOrigin: 'anonymous'
+      })
+    });
 
-      document.getElementById('exportImage').addEventListener('click', function() {
-        var isFileSaverSupported = false;
-        try {
-          var isFileSaverSupported = !!new Blob;
-        } catch (e) {
-            //File save not supported
-          }
-          if (isFileSaverSupported) {
-            this.map.once('postcompose', function(event) {
-            const
+    const interactions = ol.interaction.defaults({
+      altShiftDragRotate: false,
+      pinchRotate: false
+    });
+    this.map = new ol.Map({
+      target: 'map',
+      layers: [wmts],
+      logo: false,
+      interactions: interactions,
+      view: new ol.View({
+        extent: extent,
+        center: [616542, 6727536],
+        zoom: 1,
+        resolutions: resolutions
+      })
+    });
+    zoomslider = new ol.control.ZoomSlider();
+    this.map.addControl(zoomslider);
+
+    document.getElementById('exportImage').addEventListener('click', function () {
+      var isFileSaverSupported = false;
+      try {
+        var isFileSaverSupported = !!new Blob;
+      } catch (e) {
+        //File save not supported
+      }
+      if (isFileSaverSupported) {
+        this.map.once('postcompose', function (event) {
+          const
             canvas = event.context.canvas;
-            canvas.toBlob(function(blob) {
-              saveAs(blob, "Map.png");
-            });
+          canvas.toBlob(function (blob) {
+            saveAs(blob, "Map.png");
           });
-          this.map.renderSync();
-        } else {
-          alert('Unfortunately your browser does not support saving the map image');
-        }
-      }.bind(this), false);
-    </script>
-  </body>
+        });
+        this.map.renderSync();
+      } else {
+        alert('Unfortunately your browser does not support saving the map image');
+      }
+    }.bind(this), false);
+  </script>
+</body>
+
 </html>
